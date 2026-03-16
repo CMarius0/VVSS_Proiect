@@ -127,23 +127,42 @@ public class DrinkShopController {
             alert.showAndWait();
             return;
         }
-        Product p = new Product(r.getId(),
-                txtProdName.getText(),
-                Double.parseDouble(txtProdPrice.getText()),
-                comboProdCategorie.getValue(),
-                comboProdTip.getValue());
-        service.addProduct(p);
-        initData();
+        if (comboProdCategorie.getValue() == null) {
+            showError("Va rugam sa selectati o categorire.");
+        }
+        if (comboProdTip.getValue() == null) {
+            showError("Va rugam sa selectati un tip.");
+        }
+        try{
+            Product p = new Product(r.getId(),
+                    txtProdName.getText(),
+                    Double.parseDouble(txtProdPrice.getText()),
+                    comboProdCategorie.getValue(),
+                    comboProdTip.getValue());
+            service.addProduct(p);
+            initData();
+        }
+        catch (NumberFormatException e)
+        {
+            showError("Pretul produsului este invalid.");
+        }
+
     }
 
     @FXML
     private void onUpdateProduct() {
         Product selected = productTable.getSelectionModel().getSelectedItem();
         if (selected == null) return;
-        service.updateProduct(selected.getId(), txtProdName.getText(),
-                Double.parseDouble(txtProdPrice.getText()),
-                comboProdCategorie.getValue(), comboProdTip.getValue());
-        initData();
+        try{
+            service.updateProduct(selected.getId(), txtProdName.getText(),
+                    Double.parseDouble(txtProdPrice.getText()),
+                    comboProdCategorie.getValue(), comboProdTip.getValue());
+            initData();
+        }
+        catch (NumberFormatException e) {
+            showError("Pretul produsului este invalid.");
+        }
+
     }
 
     @FXML
@@ -167,8 +186,13 @@ public class DrinkShopController {
     // ---------- RETETA NOUA ----------
     @FXML
     private void onAddNewIngred() {
-        newRetetaList.add(new IngredientReteta(txtNewIngredName.getText(),
-                Double.parseDouble(txtNewIngredCant.getText())));
+        try{
+            newRetetaList.add(new IngredientReteta(txtNewIngredName.getText(),
+                    Double.parseDouble(txtNewIngredCant.getText())));
+        }
+        catch (NumberFormatException e) {
+            showError("Cantitatea ingredientului este invalida.");
+        }
     }
 
     @FXML
