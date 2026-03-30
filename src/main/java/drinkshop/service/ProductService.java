@@ -4,6 +4,7 @@ import drinkshop.domain.*;
 import drinkshop.repository.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ProductService {
@@ -15,6 +16,13 @@ public class ProductService {
     }
 
     public void addProduct(Product p) {
+        if(Objects.equals(p.getNume(), "")){
+            throw new IllegalArgumentException();
+        }
+        if(p.getPret() < 0.0){
+            throw new IllegalArgumentException();
+        }
+
         productRepo.save(p);
     }
 
