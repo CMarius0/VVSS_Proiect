@@ -40,4 +40,19 @@ class ProductServiceTest {
 
 
     }
+
+    @Test
+    void addEcpProduc(){
+        Product p1 = new Product(0,"nume",8.0, CategorieBautura.BUBBLE_TEA, TipBautura.WATER_BASED);
+        Product p2 = new Product(1,"nume",8.0, null, TipBautura.WATER_BASED);
+        Product p3 = new Product(2, "nume", -1.0, CategorieBautura.BUBBLE_TEA, TipBautura.WATER_BASED);
+
+        productService.addProduct(p1);
+        productService.addProduct(p2);
+
+        assertThrows(Exception.class, ()->{productService.addProduct(p3);});
+
+        assertEquals(p1, productService.findById(0));
+        assertEquals(p2, productService.findById(1));
+    }
 }
