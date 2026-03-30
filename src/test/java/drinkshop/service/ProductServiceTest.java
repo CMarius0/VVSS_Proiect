@@ -9,6 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductServiceTest {
@@ -21,6 +23,10 @@ class ProductServiceTest {
 
     @AfterEach
     void tearDown() {
+        List<Product> list = productService.getAllProducts();
+        list.forEach((product -> {
+            productService.deleteProduct(product.getId());
+        }));
     }
 
     @Test
