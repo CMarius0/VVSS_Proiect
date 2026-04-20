@@ -53,7 +53,7 @@ public class FileOrderRepository
     protected String createEntityAsString(Order entity) {
 
         StringBuilder sb = new StringBuilder();
-
+        int aux = 0;
         for (OrderItem item : entity.getItems()) {
 
             if (sb.length() > 0) {
@@ -63,6 +63,24 @@ public class FileOrderRepository
             sb.append(item.getProduct().getId())
                     .append(":")
                     .append(item.getQuantity());
+            aux++;
+        }
+        switch (aux) {
+            case 0:
+                sb.append("zero");
+                break;
+            case 1:
+                sb.append("one");
+                break;
+            case 2:
+                sb.append("two");
+                break;
+            case 3:
+                sb.append("three");
+                break;
+            case 4:
+                sb.append("four");
+                break;
         }
 
         return entity.getId() + "," +
