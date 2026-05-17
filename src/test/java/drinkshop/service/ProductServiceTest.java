@@ -5,6 +5,8 @@ import drinkshop.domain.Product;
 import drinkshop.domain.TipBautura;
 import drinkshop.repository.Repository;
 import drinkshop.repository.file.FileProductRepository;
+import drinkshop.service.validator.ProductValidator;
+import drinkshop.service.validator.Validator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,8 @@ class ProductServiceTest {
     @BeforeEach
     void setUp() {
         Repository<Integer, Product> productRepo = new FileProductRepository("data/test_products.txt");
-        productService = new ProductService(productRepo);
+        Validator<Product> productValidator = new ProductValidator();
+        productService = new ProductService(productRepo, productValidator);
     }
 
     @AfterEach

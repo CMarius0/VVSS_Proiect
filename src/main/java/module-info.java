@@ -10,4 +10,10 @@ module drinkshop {
 
     opens drinkshop.domain to  javafx.base;
     exports drinkshop.domain;
+
+    exports drinkshop.repository;
+    opens drinkshop.repository to org.mockito;
+
+    exports drinkshop.service.validator;
+    opens drinkshop.service.validator to org.mockito;
 }
